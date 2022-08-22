@@ -1,5 +1,5 @@
 /*
- * Copyright 2005-2020 the original author or authors.
+ * Copyright 2005-2022 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.openwms.common.comm;
+
 /**
- * Contains types to serialize and deserialize OSIP LOCU telegrams and messages.
+ * A TelegramResolver.
+ *
+ * @author Heiko Scherrer
  */
-package org.openwms.common.comm.osip.locu.tcp;
+public interface TelegramResolver {
+
+    String getTelegramType(String telegram);
+}

@@ -17,8 +17,7 @@ package org.openwms.common.comm.transformer.tcp;
 
 import org.openwms.common.comm.CommConstants;
 import org.openwms.common.comm.MessageMismatchException;
-import org.openwms.common.comm.osip.OSIPSerializer;
-import org.openwms.common.comm.osip.Payload;
+import org.openwms.common.comm.TelegramResolver;
 import org.openwms.common.comm.tcp.TelegramDeserializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,11 +36,9 @@ import java.util.stream.Collectors;
 import static java.lang.String.format;
 
 /**
- * A TelegramTransformer transforms incoming String telegram structures to {@link Payload}s.
- * Therefor it delegates to an appropriate {@link TelegramDeserializer} instance that is able to
- * map the incoming telegram String into a supported Java message type. This mechanism can
- * be easily extended by putting new bean instances of {@link TelegramDeserializer} to the
- * classpath.
+ * A TelegramTransformer transforms incoming String telegram structures to {@code Payload}s. Therefor it delegates to an appropriate
+ * {@link TelegramDeserializer} instance that is able to map the incoming telegram String into a supported Java message type. This mechanism
+ * can be easily extended by putting new bean instances of {@link TelegramDeserializer} to the classpath.
  *
  * @author Heiko Scherrer
  * @see TelegramDeserializer
@@ -49,15 +46,20 @@ import static java.lang.String.format;
 public class TelegramTransformer<T> implements Transformable<T> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TelegramTransformer.class);
+    private final TelegramResolver telegramResolver;
     private final List<TelegramDeserializer<T>> deserializers;
     private Map<String, TelegramDeserializer<T>> deserializersMap;
 
-    public TelegramTransformer(@Autowired(required = false) List<TelegramDeserializer<T>> deserializers) {
+    public TelegramTransformer(
+            TelegramResolver telegramResolver,
+            @Autowired(required = false) List<TelegramDeserializer<T>> deserializers) {
+        this.telegramResolver = telegramResolver;
         this.deserializers = deserializers;
     }
 
     @PostConstruct
     void onPostConstruct() {
+        // TODO [openwms]: 24.07.22 A good candidate for the Spring Plugin
         deserializersMap = deserializers == null ?
                 Collections.emptyMap() :
                 deserializers
@@ -66,10 +68,10 @@ public class TelegramTransformer<T> implements Transformable<T> {
     }
 
     /**
-     * Transformer method to transform a telegram String {@code telegram} into a {@link Payload}.
+     * Transformer method to transform a telegram String {@code telegram} into a {@code Payload}.
      *
      * @param telegram The incoming telegram String
-     * @return The {@link Payload} is transformable
+     * @return The {@code Payload} is transformable
      * @throws MessageMismatchException if no appropriate type was found.
      */
     @Transformer
@@ -81,9 +83,9 @@ public class TelegramTransformer<T> implements Transformable<T> {
             }
             return null;
         }
-        String telegramType = OSIPSerializer.getTelegramType(telegram);
+        var telegramType = telegramResolver.getTelegramType(telegram);
         MDC.put(CommConstants.LOG_TELEGRAM_TYPE, telegramType);
-        TelegramDeserializer<T> deserializer = deserializersMap.get(telegramType);
+        var deserializer = deserializersMap.get(telegramType);
         if (deserializer == null) {
             throw new MessageMismatchException(format("No deserializer found for telegram type [%s]. Is that type supported?", telegramType));
         }

@@ -13,8 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.openwms.common.comm;
+package org.openwms.common.comm.app;
 
+import org.openwms.common.comm.MessageChannelNotFoundException;
 import org.springframework.messaging.MessageChannel;
 
 import java.util.HashMap;

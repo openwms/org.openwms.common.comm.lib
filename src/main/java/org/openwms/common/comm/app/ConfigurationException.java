@@ -13,7 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.openwms.common.comm.app;
+
 /**
- * Contains types to serialize and deserialize OSIP SYSU telegrams and messages.
+ * A ConfigurationException signals invalid process configuration.
+ *
+ * @author Heiko Scherrer
  */
-package org.openwms.common.comm.osip.sysu.tcp;
+public class ConfigurationException extends RuntimeException {
+
+    /**
+     * Create a new ConfigurationException.
+     *
+     * @param message Detail message
+     */
+    public ConfigurationException(String message) {
+        super(message);
+    }
+}

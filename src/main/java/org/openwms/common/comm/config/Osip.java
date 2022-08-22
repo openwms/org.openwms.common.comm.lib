@@ -16,12 +16,14 @@
 package org.openwms.common.comm.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 
 /**
  * A Osip.
  *
  * @author Heiko Scherrer
  */
+@Component
 @ConfigurationProperties(prefix = "owms.driver.osip")
 public class Osip {
     /** Whether OSIP protocol is enabled or not. */

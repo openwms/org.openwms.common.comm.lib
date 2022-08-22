@@ -34,7 +34,7 @@ class TenantInterception extends TcpConnectionInterceptorSupport {
 
     @Override
     public boolean onMessage(Message<?> message) {
-        String cfName = getTheConnection().getConnectionFactoryName();
+        var cfName = getTheConnection().getConnectionFactoryName();
         TenantHolder.setCurrentTenant(cfName.substring(cfName.indexOf('_') + 1, cfName.lastIndexOf('_')));
         MDC.put("Tenant", TenantHolder.getCurrentTenant());
         try {

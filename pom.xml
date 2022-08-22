@@ -9,10 +9,10 @@
         <version>21</version>
         <relativePath/>
     </parent>
-    <artifactId>org.openwms.common.comm</artifactId>
-    <version>2.0.0-SNAPSHOT</version>
-    <name>OpenWMS.org COMMON: OSIP TCP/IP Driver</name>
-    <description>TCP/IP driver to connect subsystems like PLC or IPC to the OpenWMS system</description>
+    <artifactId>org.openwms.common.comm.lib</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <name>OpenWMS.org COMMON: TCP/IP Driver Shared Library</name>
+    <description>A shared library between the OpenWMS.org TCP/IP driver and message implementations</description>
     <url>https://openwms.github.io/${project.artifactId}/index.html</url>
 
     <issueManagement>
@@ -93,37 +93,7 @@
     </reporting>
 
     <build>
-        <finalName>tcpip-driver</finalName>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>repackage</id>
-                        <goals>
-                            <goal>build-info</goal>
-                            <goal>repackage</goal>
-                        </goals>
-                        <configuration>
-                            <classifier>exec</classifier>
-                        </configuration>
-                    </execution>
-                </executions>
-                <configuration>
-                    <layers>
-                        <configuration>${project.basedir}/src/layers.xml</configuration>
-                        <enabled>true</enabled>
-                    </layers>
-                    <excludes>
-                        <exclude>
-                            <groupId>org.springframework.boot</groupId>
-                            <artifactId>spring-boot-configuration-processor</artifactId>
-                        </exclude>
-                    </excludes>
-                </configuration>
-            </plugin>
-        </plugins>
+        <finalName>tcpip-driver-lib</finalName>
     </build>
 
     <dependencyManagement>
