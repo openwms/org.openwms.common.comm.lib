@@ -1,5 +1,5 @@
 /*
- * Copyright 2005-2020 the original author or authors.
+ * Copyright 2005-2022 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,9 +40,8 @@ import static org.openwms.common.comm.CommConstants.PREFIX_CONNECTION_FACTORY;
 import static org.openwms.common.comm.CommConstants.SUFFIX_OUTBOUND;
 
 /**
- * A ConnectionHolder keeps track of established connections per ConnectionFactory. It
- * listens on events whenever a new Connection is opened and stores the ConnectionId
- * that can be used as header argument in outbound messages.
+ * A ConnectionHolder keeps track of established connections per ConnectionFactory. It listens on events whenever a new Connection is opened
+ * and stores the ConnectionId that can be used as header argument in outbound messages.
  *
  * @author Heiko Scherrer
  */
@@ -54,6 +53,7 @@ public class ConnectionHolder {
     private Map<String, String> connectionIds = new ConcurrentHashMap<>();
     private final Map<String, AbstractConnectionFactory> factories;
 
+    @Deprecated
     public ConnectionHolder(@Autowired(required = false) List<AbstractConnectionFactory> factories) {
         this.factories = factories == null ?
                 Collections.emptyMap() :
@@ -63,8 +63,7 @@ public class ConnectionHolder {
     }
 
     /**
-     * On an {@link TcpConnectionOpenEvent} we store the connectionId along with the name
-     * of the ConnectionFactory.
+     * On an {@link TcpConnectionOpenEvent} we store the connectionId along with the name of the ConnectionFactory.
      *
      * @param event The event
      */
@@ -83,7 +82,7 @@ public class ConnectionHolder {
      */
     @EventListener
     public void onClosedMessage(TcpConnectionCloseEvent event) {
-        String connectionId = connectionIds.remove(event.getConnectionFactoryName());
+        var connectionId = connectionIds.remove(event.getConnectionFactoryName());
         if (connectionId != null && LOGGER.isTraceEnabled()) {
             LOGGER.trace("Deregister connection for factory [{}] with id [{}]", event.getConnectionFactoryName(), event.getConnectionId());
         }
@@ -97,7 +96,7 @@ public class ConnectionHolder {
     @EventListener
     public void onFailedMessage(TcpConnectionFailedEvent event) {
         LOGGER.trace("Connection Lost for : {}", ((AbstractConnectionFactory)event.getSource()).getComponentName());
-        String connectionId = connectionIds.remove(((AbstractConnectionFactory)event.getSource()).getComponentName());
+        var connectionId = connectionIds.remove(((AbstractConnectionFactory)event.getSource()).getComponentName());
         if (connectionId != null && LOGGER.isTraceEnabled()) {
             LOGGER.trace("Deregister connection for factory [{}]", ((AbstractConnectionFactory)event.getSource()).getComponentName());
         }
@@ -111,22 +110,21 @@ public class ConnectionHolder {
     @EventListener
     public void onFailedConnectionMessage(TcpConnectionExceptionEvent event) {
         LOGGER.trace("Connection Lost for : [{}]", event.getConnectionFactoryName());
-        String connectionId = connectionIds.remove(event.getConnectionFactoryName());
+        var connectionId = connectionIds.remove(event.getConnectionFactoryName());
         if (connectionId != null && LOGGER.isTraceEnabled()) {
             LOGGER.trace("Deregister connection for factory [{}]", event.getConnectionFactoryName());
         }
     }
 
     /**
-     * Return the current active connectionId for the ConnectionFactory given by the
-     * {@code connectionFactoryName}.
+     * Return the current active connectionId for the ConnectionFactory given by the {@code connectionFactoryName}.
      *
      * @param connectionFactoryName Name of the ConnectionFactory
      * @return The connectionId of the active Connection
      */
     public String getConnectionId(String connectionFactoryName) {
         try {
-            AbstractConnectionFactory factory = factories.get(PREFIX_CONNECTION_FACTORY + connectionFactoryName + SUFFIX_OUTBOUND);
+            var factory = factories.get(PREFIX_CONNECTION_FACTORY + connectionFactoryName + SUFFIX_OUTBOUND);
             if (factory instanceof AbstractServerConnectionFactory) {
                 return connectionIds.get(PREFIX_CONNECTION_FACTORY + connectionFactoryName + SUFFIX_OUTBOUND);
             } else {
