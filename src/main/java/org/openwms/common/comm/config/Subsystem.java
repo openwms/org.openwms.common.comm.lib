@@ -23,10 +23,7 @@ package org.openwms.common.comm.config;
 public class Subsystem {
     /** Unique subsystem name, that is used to identify the receiver. */
     private String name;
-    /**
-     * The type the driver instance is used for. Different types allow processing
-     * different kind of telegrams.
-     */
+    /** The type the driver instance is used for. Different types allow processing different kind of telegrams. */
     private TYPE type = TYPE.conveyor;
     /** The subsystem can be configured in bi-directional duplex mode. */
     private Duplex duplex;

@@ -15,6 +15,7 @@
  */
 package org.openwms.common.comm.app;
 
+import org.ameba.http.identity.IdentityContextHolder;
 import org.ameba.tenancy.TenantHolder;
 import org.slf4j.MDC;
 import org.springframework.context.ApplicationEventPublisher;
@@ -36,11 +37,13 @@ class TenantInterception extends TcpConnectionInterceptorSupport {
     public boolean onMessage(Message<?> message) {
         var cfName = getTheConnection().getConnectionFactoryName();
         TenantHolder.setCurrentTenant(cfName.substring(cfName.indexOf('_') + 1, cfName.lastIndexOf('_')));
+        IdentityContextHolder.setCurrentIdentity(TenantHolder.getCurrentTenant());
         MDC.put("Tenant", TenantHolder.getCurrentTenant());
         try {
             return super.onMessage(message);
         } finally {
             MDC.clear();
+            IdentityContextHolder.destroy();
             TenantHolder.destroy();
         }
     }
