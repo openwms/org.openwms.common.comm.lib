@@ -1,0 +1,9 @@
+org.openwms.common.comm
+org.openwms.common.comm.app
+org.openwms.common.comm.config
+org.openwms.common.comm.converter
+org.openwms.common.comm.spi
+org.openwms.common.comm.tcp
+org.openwms.common.comm.transformer
+org.openwms.common.comm.transformer.tcp
+org.springframework.messaging.support
