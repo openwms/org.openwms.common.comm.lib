@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 /**
- * Contains the tcp/ip telegram driver implementation.
+ * This package contains configuration classes for the Spring context and lifecycle management.
  */
-package org.openwms.common.comm;
-
+package org.openwms.common.comm.app;

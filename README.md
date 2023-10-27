@@ -9,7 +9,7 @@ implement and integrate their own library with that particular kind of messages 
 ![Module composition][1]
 
 # Resources
-Find further documentation in the [Wiki](https://wiki.butan092.startdedicated.de/projects/common-tcp-slash-ip-driver/wiki)
+Find further documentation in the [Wiki](https://wiki.openwms.cloud/projects/common-tcp-slash-ip-driver/wiki)
 
 [![Build status](https://github.com/openwms/org.openwms.common.comm.lib/actions/workflows/master-build.yml/badge.svg)](https://github.com/openwms/org.openwms.common.comm.lib/actions/workflows/master-build.yml)
 [![Quality](https://sonarcloud.io/api/project_badges/measure?project=org.openwms:org.openwms.common.comm.lib&metric=alert_status)](https://sonarcloud.io/dashboard?id=org.openwms:org.openwms.common.comm.lib)
