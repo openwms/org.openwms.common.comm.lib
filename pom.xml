@@ -1,38 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.openwms</groupId>
         <artifactId>org.openwms.parent</artifactId>
-        <version>25</version>
-        <relativePath />
+        <version>27.2</version>
+        <relativePath/>
     </parent>
     <artifactId>org.openwms.common.comm.lib</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <name>OpenWMS.org COMMON: TCP/IP Driver Shared Library</name>
     <description>A shared library between the OpenWMS.org TCP/IP driver and message implementations</description>
     <url>https://openwms.github.io/${project.artifactId}/index.html</url>
-
-    <issueManagement>
-        <system>GitHub</system>
-        <url>https://github.com/openwms/${project.artifactId}/issues</url>
-    </issueManagement>
-
-    <distributionManagement>
-        <site>
-            <id>site</id>
-            <url>scm:git:git@github.com:openwms/${project.artifactId}.git</url>
-        </site>
-    </distributionManagement>
-
-    <scm>
-        <url>https://github.com/openwms/${project.artifactId}</url>
-        <connection>scm:git:https://${scmuser}github.com/openwms/${project.artifactId}.git</connection>
-        <developerConnection>scm:git:https://${scmuser}github.com/openwms/${project.artifactId}.git</developerConnection>
-        <tag>HEAD</tag>
-    </scm>
 
     <developers>
         <developer>
@@ -52,24 +33,10 @@
         </developer>
     </developers>
 
-    <ciManagement>
-        <system>GitHub</system>
-        <url>https://github.com/openwms/${project.artifactId}/actions</url>
-        <notifiers>
-            <notifier>
-                <type>mail</type>
-                <configuration>
-                    <address>product@openwms.org</address>
-                </configuration>
-            </notifier>
-        </notifiers>
-    </ciManagement>
-
     <properties>
-        <core.version>2.1.0-SNAPSHOT</core.version>
-        <guava.version>30.0-jre</guava.version>
-        <servo-core.version>0.12.21</servo-core.version>
-        <spring-cloud-dependencies.version>2021.0.8</spring-cloud-dependencies.version>
+        <core.test.arch.version>1.1.0-SNAPSHOT</core.test.arch.version>
+        <core.version>3.0.0</core.version>
+        <spring-cloud-dependencies.version>2024.0.0</spring-cloud-dependencies.version>
     </properties>
 
     <reporting>
@@ -99,21 +66,14 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-				<!-- Clash in spring-cloud-starter-netflix-eureka-client -->
-                <groupId>com.google.guava</groupId>
-                <artifactId>guava</artifactId>
-                <version>${guava.version}</version>
-            </dependency>
-            <dependency>
-                <!-- Clash in org.springframework.cloud:spring-cloud-starter-netflix-eureka-client -->
-                <groupId>com.netflix.servo</groupId>
-                <artifactId>servo-core</artifactId>
-                <version>${servo-core.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>org.openwms</groupId>
                 <artifactId>org.openwms.core.util</artifactId>
                 <version>${core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.openwms</groupId>
+                <artifactId>org.openwms.core.test.arch</artifactId>
+                <version>${core.test.arch.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
@@ -131,6 +91,11 @@
             <groupId>org.openwms</groupId>
             <artifactId>org.openwms.core.util</artifactId>
             <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.openwms</groupId>
+            <artifactId>org.openwms.core.test.arch</artifactId>
+            <scope>test</scope>
         </dependency>
 
         <!-- Spring Dependencies -->
@@ -185,16 +150,6 @@
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-sleuth</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-sleuth-zipkin</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.integration</groupId>
             <artifactId>spring-integration-amqp</artifactId>
             <optional>true</optional>
@@ -209,6 +164,8 @@
             <artifactId>spring-integration-http</artifactId>
             <optional>true</optional>
         </dependency>
+
+        <!-- both for retry -->
         <dependency>
             <groupId>org.springframework.retry</groupId>
             <artifactId>spring-retry</artifactId>
@@ -220,6 +177,11 @@
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
             <scope>runtime</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>io.opentelemetry</groupId>
+            <artifactId>opentelemetry-exporter-otlp</artifactId>
             <optional>true</optional>
         </dependency>
 
@@ -251,6 +213,7 @@
         <dependency>
             <groupId>org.jolokia</groupId>
             <artifactId>jolokia-core</artifactId>
+            <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
 
@@ -269,17 +232,6 @@
 
     <repositories>
         <repository>
-            <id>sonatype-nexus-snapshots</id>
-            <name>Snapshot Repository</name>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-        </repository>
-        <repository>
             <id>sonatype-nexus-staging</id>
             <name>Staging Repository</name>
             <url>https://oss.sonatype.org/content/groups/staging/</url>
@@ -290,51 +242,5 @@
                 <enabled>true</enabled>
             </releases>
         </repository>
-        <repository>
-            <id>spring-snapshots</id>
-            <name>Spring Snapshots</name>
-            <url>https://repo.spring.io/snapshot</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-        </repository>
-        <repository>
-            <id>spring-milestones</id>
-            <name>Spring Milestones</name>
-            <url>https://repo.spring.io/milestone</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </repository>
     </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>spring-milestones</id>
-            <name>Spring Milestones</name>
-            <url>https://repo.spring.io/milestone</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </pluginRepository>
-        <pluginRepository>
-            <id>sonatype-nexus-snapshots</id>
-            <name>Snapshot Repository</name>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-        </pluginRepository>
-    </pluginRepositories>
 </project>

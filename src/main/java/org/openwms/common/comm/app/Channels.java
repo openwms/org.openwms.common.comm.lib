@@ -30,7 +30,7 @@ import static java.lang.String.format;
  */
 public class Channels {
 	
-	private Map<String, MessageChannel> outboundChannels;
+	private final Map<String, MessageChannel> outboundChannels;
 
 	public Channels() {
 		outboundChannels = new HashMap<>();
@@ -41,7 +41,7 @@ public class Channels {
 	}
 	
 	public MessageChannel getOutboundChannel(String identifiedByField) {
-		MessageChannel channel = outboundChannels.get("enrichedOutboundChannel_" + identifiedByField);
+		var channel = outboundChannels.get("enrichedOutboundChannel_" + identifiedByField);
 		if (channel == null) {
 			throw new MessageChannelNotFoundException(format("No MessageChannel found for identifying value [%s]", identifiedByField));
 		}

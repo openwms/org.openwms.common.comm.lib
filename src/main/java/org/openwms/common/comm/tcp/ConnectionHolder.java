@@ -15,6 +15,7 @@
  */
 package org.openwms.common.comm.tcp;
 
+import org.ameba.annotation.Public;
 import org.openwms.common.comm.MessageChannelNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,6 +46,7 @@ import static org.openwms.common.comm.CommConstants.SUFFIX_OUTBOUND;
  *
  * @author Heiko Scherrer
  */
+@Public
 @Lazy
 @Component
 public class ConnectionHolder {

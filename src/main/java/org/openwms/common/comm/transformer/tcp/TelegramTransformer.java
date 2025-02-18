@@ -15,6 +15,7 @@
  */
 package org.openwms.common.comm.transformer.tcp;
 
+import jakarta.annotation.PostConstruct;
 import org.openwms.common.comm.CommConstants;
 import org.openwms.common.comm.MessageMismatchException;
 import org.openwms.common.comm.TelegramResolver;
@@ -27,7 +28,6 @@ import org.springframework.integration.annotation.Transformer;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.handler.annotation.Headers;
 
-import javax.annotation.PostConstruct;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;

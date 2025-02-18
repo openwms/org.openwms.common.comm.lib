@@ -15,6 +15,7 @@
  */
 package org.openwms.common.comm.config;
 
+import org.ameba.annotation.Public;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Component;
  *
  * @author Heiko Scherrer
  */
+@Public
 @Component
 @ConfigurationProperties(prefix = "owms.driver.osip")
 public class Osip {

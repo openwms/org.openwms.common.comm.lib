@@ -1,5 +1,4 @@
 # Purpose
-
 This shared library is the heart of the [OpenWMS.org TCP/IP driver](https://openwms.github.io/org.openwms.common.comm) that contains the
 actual implementation of the driver module but not the message specific implementation details. OpenWMS.org ships with an implementation of
 the [OSIP message specification](https://interface21-io.gitbook.io/osip) that is bundled in a separate module and can easily be replaced in
@@ -18,7 +17,6 @@ Find further documentation in the [Wiki](https://wiki.openwms.cloud/projects/com
 [![Join the chat at https://gitter.im/openwms/org.openwms](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/openwms/org.openwms?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 # Build and Release
-
 Build the component locally and release to Maven Central
 ```
 $ mvn deploy -Prelease,gpg

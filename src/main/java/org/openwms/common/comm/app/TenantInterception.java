@@ -23,7 +23,7 @@ import org.springframework.integration.ip.tcp.connection.TcpConnectionIntercepto
 import org.springframework.messaging.Message;
 
 /**
- * A TenantInterception.
+ * A TenantInterception initializes a context to propagate tenant and identity information.
  *
  * @author Heiko Scherrer
  */
@@ -33,6 +33,11 @@ class TenantInterception extends TcpConnectionInterceptorSupport {
         super(applicationEventPublisher);
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * Enrich the processing context of the incoming message with the information we get from the message.
+     */
     @Override
     public boolean onMessage(Message<?> message) {
         var cfName = getTheConnection().getConnectionFactoryName();

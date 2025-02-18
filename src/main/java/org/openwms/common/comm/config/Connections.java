@@ -15,6 +15,7 @@
  */
 package org.openwms.common.comm.config;
 
+import org.ameba.annotation.Public;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -26,6 +27,7 @@ import java.util.List;
  *
  * @author Heiko Scherrer
  */
+@Public
 @Component
 @ConfigurationProperties(prefix = "owms.driver.connections")
 public class Connections {
