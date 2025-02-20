@@ -1,4 +1,4 @@
-name: "Trigger UI Build"
+name: "Trigger OSIP Build"
 on:
   workflow_run:
     workflows: ["master_build"]
