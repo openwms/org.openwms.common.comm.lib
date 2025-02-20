@@ -34,7 +34,7 @@
     </developers>
 
     <properties>
-        <core.test.arch.version>1.1.0-SNAPSHOT</core.test.arch.version>
+        <core.test.arch.version>1.0.2</core.test.arch.version>
         <core.version>3.0.0</core.version>
         <spring-cloud-dependencies.version>2024.0.0</spring-cloud-dependencies.version>
     </properties>
@@ -90,7 +90,6 @@
         <dependency>
             <groupId>org.openwms</groupId>
             <artifactId>org.openwms.core.util</artifactId>
-            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.openwms</groupId>
